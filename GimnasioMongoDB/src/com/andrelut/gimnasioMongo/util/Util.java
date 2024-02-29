@@ -8,7 +8,7 @@ public class Util {
     }
 
 
-    public static void mostrarMensajeError(String message) {
+    public static void mensajeError(String message) {
         JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
 
     }

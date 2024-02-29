@@ -1,5 +1,6 @@
 package com.andrelut.gimnasioMongo.gui;
 
+import com.andrelut.gimnasioMongo.base.Cliente;
 import com.github.lgooddatepicker.components.DatePicker;
 
 import javax.swing.*;
@@ -39,7 +40,8 @@ public class Vista {
     public JTextField txtBuscarCliente;
     public JTextField txtBuscarSuscripcion;
     public JTextField txtBuscarClase;
-    JMenuItem itemConectar;
+    public DefaultListModel<Cliente> dlmClientes;
+    JMenuItem itemConexion;
     JMenuItem itemSalir;
 
 
@@ -54,25 +56,29 @@ public class Vista {
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 
         setMenu();
-//        setListModels();
+        setListModels();
 //        setComboBox();
 
     }
 
+    private void setListModels() {
+        dlmClientes = new DefaultListModel<>();
+        listClientes.setModel(dlmClientes);
+    }
+
     private void setMenu() {
-        itemConectar = new JMenuItem("Conectar");
-        itemConectar.setActionCommand("conexion");
+        JMenuBar mbBar = new JMenuBar();
+        JMenu menu = new JMenu("Archivo");
+        itemConexion = new JMenuItem("Conectar");
+        itemConexion.setActionCommand("conectar");
         itemSalir = new JMenuItem("Salir");
         itemSalir.setActionCommand("salir");
-
-        JMenu menuArchivo = new JMenu("Archivo");
-        menuArchivo.add(itemConectar);
-        menuArchivo.add(itemSalir);
-
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.add(menuArchivo);
-
-        frame.setJMenuBar(menuBar);
+        menu.add(itemConexion);
+        menu.add(itemSalir);
+        mbBar.add(menu);
+        mbBar.add(Box.createHorizontalGlue());
+        frame.setJMenuBar(mbBar);
     }
+
 
 }

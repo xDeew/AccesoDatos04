@@ -5,37 +5,38 @@ import com.andrelut.gimnasioMongo.base.Clase;
 import com.andrelut.gimnasioMongo.base.Cliente;
 import com.andrelut.gimnasioMongo.base.Suscripcion;
 import com.andrelut.gimnasioMongo.util.Util;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
 
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Controlador implements ActionListener, KeyListener, ListSelectionListener {
     private Modelo modelo;
     private Vista vista;
+    private boolean conectado;
+
 
     public Controlador(Modelo modelo, Vista vista) {
         this.vista = vista;
         this.modelo = modelo;
+        this.conectado = false;
+
 
         addActionListeners(this);
         addKeyListeners(this);
         addListSelectionListeners(this);
 
-        try {
-            modelo.conectar();
-            vista.itemConectar.setText("Desconectar");
-            setBotonesActivados(true);
-            listarClientes();
-            listarSuscripciones();
-            listarClases();
-        } catch (Exception ex) {
-            Util.mostrarMensajeError("No se ha podido establecer conexión con el servidor.");
-        }
+
     }
 
     private void addActionListeners(ActionListener listener) {
@@ -49,7 +50,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         vista.btnModificarSuscripcion.addActionListener(listener);
         vista.btnBorrarSuscripcion.addActionListener(listener);
 
-        vista.itemConectar.addActionListener(listener);
+        vista.itemConexion.addActionListener(listener);
         vista.itemSalir.addActionListener(listener);
     }
 
@@ -67,30 +68,34 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "conexion":
-                try {
-                    if (modelo.getCliente() == null) {
-                        modelo.conectar();
-                        vista.itemConectar.setText("Desconectar");
-                        setBotonesActivados(true);
-                        listarClientes();
-                        listarSuscripciones();
-                        listarClases();
-                    } else {
-                        modelo.desconectar();
-                        vista.itemConectar.setText("Conectar");
-                        setBotonesActivados(false);
-//                        vista.dlmProductos.clear();
-//                        vista.dlmEmpleados.clear();
-//                        vista.dlmDepartamentos.clear();
-                        limpiarCamposCliente();
-                        limpiarCamposSuscripcion();
-                        limpiarCamposClase();
-                    }
-                } catch (Exception ex) {
-                    Util.mostrarMensajeError("No se ha podido establecer conexión con el servidor.");
-                }
+        String comando = e.getActionCommand();
+        if (!comando.equals("conectar") && !comando.equals("salir")) {
+            conectado = modelo.estaConectado();
+            if (!conectado) {
+                JOptionPane.showMessageDialog(vista.frame, "No hay conexión a la base de datos. Por favor, conecte antes de continuar.", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        switch (comando) {
+            case "desconectar":
+                modelo.desconectar();
+                JOptionPane.showMessageDialog(vista.frame, "Desconectado de la base de datos.");
+                vista.itemConexion.setText("Conectar");
+                vista.itemConexion.setActionCommand("conectar");
+                vista.comboClientesRegistrados.setEnabled(false);
+
+                break;
+            case "conectar":
+
+                modelo.conectar();
+                JOptionPane.showMessageDialog(vista.frame, "Conectado a la base de datos.");
+                vista.itemConexion.setText("Desconectar");
+                vista.itemConexion.setActionCommand("desconectar");
+                vista.comboClientesRegistrados.setEnabled(true);
+                actualizarComboClientesRegistrados();
+
+
                 break;
 
             case "salir":
@@ -99,6 +104,14 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 break;
 
             case "addCliente":
+                if (comprobarCamposCliente()) {
+                    modelo.guardarObjeto(new Cliente(vista.txtNombre.getText(), vista.fechaNacimiento.getDate(), Double.parseDouble(vista.txtPeso.getText()), Double.parseDouble(vista.txtAltura.getText())));
+                    JOptionPane.showMessageDialog(vista.frame, "Cliente guardado correctamente.");
+                    limpiarCamposCliente();
+                } else {
+                    Util.mensajeError("Por favor, rellene todos los campos.");
+                }
+                listarClases();
 
                 break;
 
@@ -137,8 +150,30 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         }
     }
 
+    private void actualizarComboClientesRegistrados() {
+        vista.comboClientesRegistrados.removeAllItems();
+
+        MongoCollection<Document> coleccionClientes = modelo.coleccionClientes;
+        FindIterable<Document> documentos = coleccionClientes.find();
+
+        for (Document documento : documentos) {
+            Cliente cliente = new Cliente();
+            cliente.setId(documento.getObjectId("_id"));
+            cliente.setNombre(documento.getString("nombre"));
+            Date nacimientoDate = documento.getDate("nacimiento");
+            if (nacimientoDate != null) {
+                cliente.setNacimiento(nacimientoDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            }
+            cliente.setPeso(documento.getDouble("peso"));
+            cliente.setAltura(documento.getDouble("altura"));
+
+            vista.comboClientesRegistrados.addItem(cliente.getNombre() + " - " + cliente.getId());
+        }
+    }
+
     @Override
     public void keyReleased(KeyEvent e) {
+
 
     }
 
@@ -148,24 +183,27 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private boolean comprobarCamposCliente() {
+        return !vista.txtNombre.getText().isEmpty() && !vista.txtPeso.getText().isEmpty() && !vista.txtAltura.getText().isEmpty() && vista.fechaNacimiento.getDate() != null;
 
-        return false;
 
     }
 
     private boolean comprobarCamposSuscripcion() {
-
-        return false;
+        return !vista.fechaInicio.getDate().toString().isEmpty() && !vista.fechaFin.getDate().toString().isEmpty() && !vista.comboEstadoSuscripcion.getSelectedItem().toString().isEmpty() && !vista.comboClientesRegistrados.getSelectedItem().toString().isEmpty();
 
     }
 
     private boolean comprobarCamposClase() {
 
-        return false;
+        return !vista.txtNombreClase.getText().isEmpty() && !vista.txtInstructor.getText().isEmpty() && !vista.txtHorario.getText().isEmpty();
 
     }
 
     private void limpiarCamposCliente() {
+        vista.txtNombre.setText("");
+        vista.txtPeso.setText("");
+        vista.txtAltura.setText("");
+        vista.fechaNacimiento.setDate(null);
 
     }
 
@@ -187,6 +225,10 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private void listarClases() {
+        vista.dlmClientes.clear();
+        for (Cliente cliente : modelo.getClientes()) {
+            vista.dlmClientes.addElement(cliente);
+        }
 
     }
 

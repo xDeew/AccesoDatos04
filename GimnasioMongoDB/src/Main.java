@@ -7,8 +7,6 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        Vista vista = new Vista();
-        Modelo modelo = new Modelo();
-        Controlador controlador = new Controlador(modelo, vista);
+        new Controlador(new Modelo(), new Vista());
     }
 }

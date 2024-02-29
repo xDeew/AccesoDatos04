@@ -1,13 +1,11 @@
-db.miembros.insert([
+db.clientes.insert([
     {
-        id: 1,
         nombre: "Juan Pérez",
         fechaNacimiento: "1990-04-15",
         altura: 1.75, 
         peso: 80.5 
     },
     {
-        id: 2,
         nombre: "Laura Martínez",
         fechaNacimiento: "1988-11-23",
         altura: 1.60,
@@ -17,30 +15,24 @@ db.miembros.insert([
 
 db.clases.insert([
     {
-        id: 1,
         nombre: "Yoga",
         instructor: "Ana Gómez",
-        horario: "2024-02-15T09:00:00Z"
+        horario: "09:00:00"
     },
     {
-        id: 2,
         nombre: "Crossfit",
         instructor: "Marcos Duarte",
-        horario: "2024-02-16T17:00:00Z"
+        horario: "17:00:00"
     }
 ]);
 
 db.suscripciones.insert([
     {
-        idMiembro: 1,
-        idClase: 1,
         fechaSuscripcion: "2024-01-01",
         estado: "Activa",
         fechaFinalizacion: "2024-12-31"
     },
     {
-        idMiembro: 2,
-        idClase: 2,
         fechaSuscripcion: "2024-01-15",
         estado: "Activa", 
         fechaFinalizacion: "2024-12-31" 
