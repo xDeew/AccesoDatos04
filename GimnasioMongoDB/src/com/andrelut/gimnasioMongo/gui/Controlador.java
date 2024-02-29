@@ -245,23 +245,24 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == vista.txtBuscarCliente) {
-            listarClientesBusqueda(modelo.getClients(vista.txtBuscarCliente.getText()));
             if (vista.txtBuscarCliente.getText().isEmpty()) {
-                listarClientes();
+                vista.dlmBusquedaClientes.clear();
+            } else {
+                listarClientesBusqueda(modelo.getClients(vista.txtBuscarCliente.getText()));
             }
         } else if (e.getSource() == vista.txtBuscarSuscripcion) {
-            listarSuscripcionesBusqueda(modelo.getSubscriptions(vista.txtBuscarSuscripcion.getText()));
             if (vista.txtBuscarSuscripcion.getText().isEmpty()) {
-                listarSuscripciones();
+                vista.dlmBusquedaSuscripcionesClientes.clear();
+            } else {
+                listarSuscripcionesBusqueda(modelo.getSubscriptions(vista.txtBuscarSuscripcion.getText()));
             }
         } else if (e.getSource() == vista.txtBuscarClase) {
-            listarClasesBusqueda(modelo.getClasesListar(vista.txtBuscarClase.getText()));
             if (vista.txtBuscarClase.getText().isEmpty()) {
-                listarClases();
+                vista.dlmBusquedaClase.clear();
+            } else {
+                listarClasesBusqueda(modelo.getClasesListar(vista.txtBuscarClase.getText()));
             }
         }
-
-
     }
 
     @Override
