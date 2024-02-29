@@ -201,10 +201,10 @@ public class Modelo {
         return lista;
     }
 
-    public ArrayList<Suscripcion> getSubscriptions(String text) {
+    public ArrayList<Suscripcion> getSubscriptions(String comparador) {
         ArrayList<Suscripcion> lista = new ArrayList<>();
 
-        Bson matchCliente = match(Filters.regex("nombre", ".*" + text + ".*"));
+        Bson matchCliente = match(Filters.regex("nombre", ".*" + comparador + ".*"));
         for (Document clienteDocument : coleccionClientes.aggregate(Arrays.asList(matchCliente))) {
             Cliente cliente = documentToCliente(clienteDocument);
 
@@ -220,7 +220,35 @@ public class Modelo {
     }
 
 
-    public ArrayList<Clase> getClases(String text) {
-        return null;
+    public ArrayList<Clase> getClases() {
+        ArrayList<Clase> lista = new ArrayList<>();
+
+        for (Document document : coleccionClases.find()) {
+            lista.add(documentToClase(document));
+        }
+        return lista;
+
+    }
+
+    private Clase documentToClase(Document document) {
+        Clase clase = new Clase();
+
+        clase.setId(document.getObjectId("_id"));
+        clase.setNombre(document.getString("nombre"));
+        clase.setInstructor(document.getString("instructor"));
+        clase.setHorario(document.getString("horario"));
+
+        return clase;
+    }
+
+    public ArrayList<Clase> getClasesListar(String comparador) {
+        ArrayList<Clase> lista = new ArrayList<>();
+        Document query = new Document();
+        query.append("nombre", new Document("$regex", "/*" + comparador + "/*"));
+
+        for (Document document : coleccionClases.find(query)) {
+            lista.add(documentToClase(document));
+        }
+        return lista;
     }
 }

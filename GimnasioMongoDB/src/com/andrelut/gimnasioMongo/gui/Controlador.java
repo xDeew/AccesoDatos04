@@ -190,16 +190,44 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 break;
 
             case "addClase":
-
+                if (comprobarCamposClase()) {
+                    modelo.guardarObjeto(new Clase(vista.txtNombreClase.getText(), vista.txtInstructor.getText(), vista.txtHorario.getText()));
+                    JOptionPane.showMessageDialog(vista.frame, "Clase guardada correctamente.");
+                    limpiarCamposClase();
+                } else {
+                    Util.mensajeError("Por favor, rellene todos los campos.");
+                }
                 break;
 
             case "modificarClase":
-
+                if (vista.listClases.getSelectedValue() != null) {
+                    if (comprobarCamposClase()) {
+                        Clase clase = (Clase) vista.listClases.getSelectedValue();
+                        clase.setNombre(vista.txtNombreClase.getText());
+                        clase.setInstructor(vista.txtInstructor.getText());
+                        clase.setHorario(vista.txtHorario.getText());
+                        modelo.modificarObjeto(clase);
+                        JOptionPane.showMessageDialog(vista.frame, "Clase modificada correctamente.");
+                        limpiarCamposClase();
+                    } else {
+                        Util.mensajeError("Error al modificar, revise los campos e introduzca nuevamente.");
+                    }
+                    listarClases();
+                } else {
+                    Util.mensajeError("Por favor, seleccione una clase de la lista.");
+                }
 
                 break;
 
             case "eliminarClase":
-
+                if (vista.listClases.getSelectedValue() != null) {
+                    modelo.eliminarObjeto(vista.listClases.getSelectedValue());
+                    JOptionPane.showMessageDialog(vista.frame, "Clase eliminada correctamente.");
+                    limpiarCamposClase();
+                    listarClases();
+                } else {
+                    Util.mensajeError("Por favor, seleccione una clase de la lista.");
+                }
                 break;
         }
     }
@@ -227,7 +255,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 listarSuscripciones();
             }
         } else if (e.getSource() == vista.txtBuscarClase) {
-            listarClasesBusqueda(modelo.getClases(vista.txtBuscarClase.getText()));
+            listarClasesBusqueda(modelo.getClasesListar(vista.txtBuscarClase.getText()));
             if (vista.txtBuscarClase.getText().isEmpty()) {
                 listarClases();
             }
@@ -301,6 +329,9 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private void limpiarCamposClase() {
+        vista.txtNombreClase.setText("");
+        vista.txtInstructor.setText("");
+        vista.txtHorario.setText("");
 
     }
 
@@ -322,6 +353,10 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private void listarClases() {
+        vista.dlmClases.clear();
+        for (Clase clase : modelo.getClases()) {
+            vista.dlmClases.addElement(clase);
+        }
 
 
     }
@@ -342,15 +377,16 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private void listarClasesBusqueda(ArrayList<Clase> lista) {
-
-    }
-
-    private void setBotonesActivados(boolean activados) {
+        vista.dlmBusquedaClase.clear();
+        for (Clase clase : lista) {
+            vista.dlmBusquedaClase.addElement(clase);
+        }
 
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+
     }
 
     @Override

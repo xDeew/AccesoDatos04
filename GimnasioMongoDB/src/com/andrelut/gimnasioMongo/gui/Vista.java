@@ -1,5 +1,6 @@
 package com.andrelut.gimnasioMongo.gui;
 
+import com.andrelut.gimnasioMongo.base.Clase;
 import com.andrelut.gimnasioMongo.base.Cliente;
 import com.andrelut.gimnasioMongo.base.Suscripcion;
 import com.github.lgooddatepicker.components.DatePicker;
@@ -47,6 +48,9 @@ public class Vista {
     public DefaultListModel<Cliente> dlmBusquedaClientes;
     public DefaultListModel<Cliente> dlmClientes;
     public DefaultListModel<Suscripcion> dlmSuscripciones;
+    public JList<Clase> listBusquedaClase;
+    public DefaultListModel<Clase> dlmClases;
+    public DefaultListModel<Clase> dlmBusquedaClase;
     JMenuItem itemConexion;
     JMenuItem itemSalir;
     private JLabel labelLogo;
@@ -115,11 +119,17 @@ public class Vista {
         dlmSuscripciones = new DefaultListModel<>();
         listSuscripciones.setModel(dlmSuscripciones);
 
+        dlmClases = new DefaultListModel<>();
+        listClases.setModel(dlmClases);
+
         dlmBusquedaClientes = new DefaultListModel<>();
         listBusquedaCliente.setModel(dlmBusquedaClientes);
 
         dlmBusquedaSuscripcionesClientes = new DefaultListModel<>();
         listBusquedaSuscripcionesCliente.setModel(dlmBusquedaSuscripcionesClientes);
+
+        dlmBusquedaClase = new DefaultListModel<>();
+        listBusquedaClase.setModel(dlmBusquedaClase);
     }
 
     private void setMenu() {
