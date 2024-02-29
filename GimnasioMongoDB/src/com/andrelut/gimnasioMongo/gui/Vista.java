@@ -41,6 +41,10 @@ public class Vista {
     public JTextField txtBuscarCliente;
     public JTextField txtBuscarSuscripcion;
     public JTextField txtBuscarClase;
+    public JList<Cliente> listBusquedaCliente;
+    public JList listBusquedaSuscripcionesCliente;
+    public DefaultListModel<Suscripcion> dlmBusquedaSuscripcionesClientes;
+    public DefaultListModel<Cliente> dlmBusquedaClientes;
     public DefaultListModel<Cliente> dlmClientes;
     public DefaultListModel<Suscripcion> dlmSuscripciones;
     JMenuItem itemConexion;
@@ -96,6 +100,12 @@ public class Vista {
 
         dlmSuscripciones = new DefaultListModel<>();
         listSuscripciones.setModel(dlmSuscripciones);
+
+        dlmBusquedaClientes = new DefaultListModel<>();
+        listBusquedaCliente.setModel(dlmBusquedaClientes);
+
+        dlmBusquedaSuscripcionesClientes = new DefaultListModel<>();
+        listBusquedaSuscripcionesCliente.setModel(dlmBusquedaSuscripcionesClientes);
     }
 
     private void setMenu() {

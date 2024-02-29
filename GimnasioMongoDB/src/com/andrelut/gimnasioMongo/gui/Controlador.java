@@ -102,6 +102,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 if (comprobarCamposCliente()) {
                     modelo.guardarObjeto(new Cliente(vista.txtNombre.getText(), vista.fechaNacimiento.getDate(), Double.parseDouble(vista.txtPeso.getText()), Double.parseDouble(vista.txtAltura.getText())));
                     JOptionPane.showMessageDialog(vista.frame, "Cliente guardado correctamente.");
+                    actualizarComboClientesRegistrados();
                     limpiarCamposCliente();
                 } else {
                     Util.mensajeError("Por favor, rellene todos los campos.");
@@ -148,7 +149,6 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                     Cliente clienteSeleccionado = (Cliente) vista.comboClientesRegistrados.getSelectedItem();
                     Suscripcion nuevaSuscripcion = new Suscripcion(clienteSeleccionado, vista.fechaInicio.getDate(), vista.fechaFin.getDate(), vista.comboEstadoSuscripcion.getSelectedItem().toString());
                     modelo.guardarObjeto(nuevaSuscripcion);
-                    JOptionPane.showMessageDialog(vista.frame, "Suscripción guardada correctamente.");
                     limpiarCamposSuscripcion();
                 } else {
                     Util.mensajeError("Por favor, rellene todos los campos.");
@@ -216,6 +216,22 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if (e.getSource() == vista.txtBuscarCliente) {
+            listarClientesBusqueda(modelo.getClients(vista.txtBuscarCliente.getText()));
+            if (vista.txtBuscarCliente.getText().isEmpty()) {
+                listarClientes();
+            }
+        } else if (e.getSource() == vista.txtBuscarSuscripcion) {
+            listarSuscripcionesBusqueda(modelo.getSubscriptions(vista.txtBuscarSuscripcion.getText()));
+            if (vista.txtBuscarSuscripcion.getText().isEmpty()) {
+                listarSuscripciones();
+            }
+        } else if (e.getSource() == vista.txtBuscarClase) {
+            listarClasesBusqueda(modelo.getClases(vista.txtBuscarClase.getText()));
+            if (vista.txtBuscarClase.getText().isEmpty()) {
+                listarClases();
+            }
+        }
 
 
     }
@@ -257,8 +273,9 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private boolean comprobarCamposSuscripcion() {
-        return !vista.fechaInicio.getDate().toString().isEmpty() && !vista.fechaFin.getDate().toString().isEmpty() && !vista.comboEstadoSuscripcion.getSelectedItem().toString().isEmpty() && !vista.comboClientesRegistrados.getSelectedItem().toString().isEmpty();
-
+        return vista.fechaInicio.getDate() != null && vista.fechaFin.getDate() != null &&
+                vista.comboEstadoSuscripcion.getSelectedItem() != null &&
+                vista.comboClientesRegistrados.getSelectedItem() != null;
     }
 
     private boolean comprobarCamposClase() {
@@ -310,11 +327,18 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private void listarClientesBusqueda(ArrayList<Cliente> lista) {
+        vista.dlmBusquedaClientes.clear();
+        for (Cliente cliente : lista) {
+            vista.dlmBusquedaClientes.addElement(cliente);
+        }
 
     }
 
     private void listarSuscripcionesBusqueda(ArrayList<Suscripcion> lista) {
-
+        vista.dlmBusquedaSuscripcionesClientes.clear();
+        for (Suscripcion suscripcion : lista) {
+            vista.dlmBusquedaSuscripcionesClientes.addElement(suscripcion);
+        }
     }
 
     private void listarClasesBusqueda(ArrayList<Clase> lista) {

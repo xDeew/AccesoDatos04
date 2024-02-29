@@ -6,12 +6,18 @@ import com.andrelut.gimnasioMongo.base.Suscripcion;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
+import javax.swing.*;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+
+import static com.mongodb.client.model.Aggregates.match;
 
 public class Modelo {
     private final static String COLECCION_CLASES = "clases";
@@ -57,7 +63,15 @@ public class Modelo {
         } else if (objeto instanceof Clase) {
             coleccionClases.insertOne(objectToDocument(objeto));
         } else if (objeto instanceof Suscripcion) {
-            coleccionSuscripciones.insertOne(objectToDocument(objeto));
+            Suscripcion suscripcion = (Suscripcion) objeto;
+            Document query = new Document("clienteId", suscripcion.getCliente().getId());
+            Document existingSubscription = coleccionSuscripciones.find(query).first();
+            if (existingSubscription != null) {
+                JOptionPane.showMessageDialog(null, "El cliente ya tiene una suscripción activa");
+            } else {
+                coleccionSuscripciones.insertOne(objectToDocument(objeto));
+                JOptionPane.showMessageDialog(null, "Suscripción guardada correctamente.");
+            }
         }
     }
 
@@ -173,5 +187,40 @@ public class Modelo {
     private Cliente getClienteById(ObjectId id) {
         Document document = coleccionClientes.find(new Document("_id", id)).first();
         return documentToCliente(document);
+    }
+
+    public ArrayList<Cliente> getClients(String comparador) {
+        ArrayList<Cliente> lista = new ArrayList<>();
+        Document query = new Document();
+        query.append("nombre", new Document("$regex", "/*" + comparador + "/*"));
+
+        for (Document document : coleccionClientes.find(query)) {
+            lista.add(documentToCliente(document));
+        }
+
+        return lista;
+    }
+
+    public ArrayList<Suscripcion> getSubscriptions(String text) {
+        ArrayList<Suscripcion> lista = new ArrayList<>();
+
+        Bson matchCliente = match(Filters.regex("nombre", ".*" + text + ".*"));
+        for (Document clienteDocument : coleccionClientes.aggregate(Arrays.asList(matchCliente))) {
+            Cliente cliente = documentToCliente(clienteDocument);
+
+            Bson matchSuscripcion = match(Filters.eq("clienteId", cliente.getId()));
+            for (Document suscripcionDocument : coleccionSuscripciones.aggregate(Arrays.asList(matchSuscripcion))) {
+                Suscripcion suscripcion = documentToSuscripcion(suscripcionDocument);
+                suscripcion.setCliente(cliente);
+                lista.add(suscripcion);
+            }
+        }
+
+        return lista;
+    }
+
+
+    public ArrayList<Clase> getClases(String text) {
+        return null;
     }
 }
