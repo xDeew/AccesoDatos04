@@ -112,7 +112,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="f45a1" class="javax.swing.JButton" binding="añadirButton" default-binding="true">
+              <component id="f45a1" class="javax.swing.JButton" binding="btnNuevoCliente">
                 <constraints>
                   <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
@@ -121,7 +121,7 @@
                   <text value="Añadir"/>
                 </properties>
               </component>
-              <component id="e4f5e" class="javax.swing.JButton" default-binding="true">
+              <component id="e4f5e" class="javax.swing.JButton" binding="btnModificarCliente">
                 <constraints>
                   <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
@@ -130,7 +130,7 @@
                   <text value="Modificar"/>
                 </properties>
               </component>
-              <component id="8f84" class="javax.swing.JButton" default-binding="true">
+              <component id="8f84" class="javax.swing.JButton" binding="btnBorrarCliente">
                 <constraints>
                   <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
@@ -244,7 +244,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="52469" class="javax.swing.JButton" binding="añadirButton1" default-binding="true">
+              <component id="52469" class="javax.swing.JButton" binding="btnNuevaSuscripcion">
                 <constraints>
                   <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
@@ -253,7 +253,7 @@
                   <text value="Añadir"/>
                 </properties>
               </component>
-              <component id="ad8c" class="javax.swing.JButton" default-binding="true">
+              <component id="ad8c" class="javax.swing.JButton" binding="btnModificarSuscripcion">
                 <constraints>
                   <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
@@ -262,7 +262,7 @@
                   <text value="Modificar"/>
                 </properties>
               </component>
-              <component id="31527" class="javax.swing.JButton" default-binding="true">
+              <component id="31527" class="javax.swing.JButton" binding="btnBorrarSuscripcion">
                 <constraints>
                   <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>

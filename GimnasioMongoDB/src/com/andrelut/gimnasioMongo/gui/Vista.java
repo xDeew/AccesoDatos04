@@ -34,9 +34,7 @@ public class Vista {
     public JTextField txtHorario;
     public JList listClases;
     public JComboBox comboClientesRegistrados;
-    public JButton añadirButton;
     public JList listClientes;
-    public JButton añadirButton1;
     public JList listSuscripciones;
 
 
