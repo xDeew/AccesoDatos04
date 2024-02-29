@@ -36,6 +36,11 @@ public class Vista {
     public JComboBox comboClientesRegistrados;
     public JList listClientes;
     public JList listSuscripciones;
+    public JTextField txtBuscarCliente;
+    public JTextField txtBuscarSuscripcion;
+    public JTextField txtBuscarClase;
+    JMenuItem itemConectar;
+    JMenuItem itemSalir;
 
 
     public Vista() {
@@ -48,10 +53,26 @@ public class Vista {
 
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 
-//        setMenu();
+        setMenu();
 //        setListModels();
 //        setComboBox();
 
+    }
+
+    private void setMenu() {
+        itemConectar = new JMenuItem("Conectar");
+        itemConectar.setActionCommand("conexion");
+        itemSalir = new JMenuItem("Salir");
+        itemSalir.setActionCommand("salir");
+
+        JMenu menuArchivo = new JMenu("Archivo");
+        menuArchivo.add(itemConectar);
+        menuArchivo.add(itemSalir);
+
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(menuArchivo);
+
+        frame.setJMenuBar(menuBar);
     }
 
 }
