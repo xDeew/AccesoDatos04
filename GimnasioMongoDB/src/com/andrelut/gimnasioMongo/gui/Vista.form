@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.andrelut.gimnasioMongo.gui.Vista">
   <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FormLayout">
-    <rowspec value="center:521px:noGrow"/>
+    <rowspec value="center:d:noGrow"/>
     <colspec value="fill:608px:noGrow"/>
     <constraints>
-      <xy x="20" y="20" width="608" height="521"/>
+      <xy x="20" y="20" width="608" height="324"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -20,6 +20,12 @@
         <border type="none"/>
         <children>
           <grid id="dc7dd" binding="JPanelClientes" layout-manager="FormLayout">
+            <rowspec value="center:max(d;4px):noGrow"/>
+            <rowspec value="top:4dlu:noGrow"/>
+            <rowspec value="center:max(d;4px):noGrow"/>
+            <rowspec value="top:4dlu:noGrow"/>
+            <rowspec value="center:max(d;4px):noGrow"/>
+            <rowspec value="top:4dlu:noGrow"/>
             <rowspec value="center:max(d;4px):noGrow"/>
             <rowspec value="top:4dlu:noGrow"/>
             <rowspec value="center:max(d;4px):noGrow"/>
@@ -88,7 +94,7 @@
                   <text value="Peso"/>
                 </properties>
               </component>
-              <component id="3d387" class="javax.swing.JTextField">
+              <component id="3d387" class="javax.swing.JTextField" binding="txtAltura">
                 <constraints>
                   <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -97,6 +103,56 @@
                 </constraints>
                 <properties/>
               </component>
+              <component id="5f092" class="javax.swing.JTextField" binding="txtPeso">
+                <constraints>
+                  <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                  <forms defaultalign-horz="false"/>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="f45a1" class="javax.swing.JButton" binding="añadirButton" default-binding="true">
+                <constraints>
+                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text value="Añadir"/>
+                </properties>
+              </component>
+              <component id="e4f5e" class="javax.swing.JButton" default-binding="true">
+                <constraints>
+                  <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text value="Modificar"/>
+                </properties>
+              </component>
+              <component id="8f84" class="javax.swing.JButton" default-binding="true">
+                <constraints>
+                  <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <forms/>
+                </constraints>
+                <properties>
+                  <text value="Eliminar"/>
+                </properties>
+              </component>
+              <scrollpane id="109f4">
+                <constraints>
+                  <grid row="8" column="2" row-span="5" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <forms defaultalign-horz="false" defaultalign-vert="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="c1bca" class="javax.swing.JList" binding="listClientes">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
           <grid id="a6b30" binding="JPanelSuscripciones" layout-manager="FormLayout">
@@ -112,15 +168,6 @@
             <rowspec value="top:4dlu:noGrow"/>
             <rowspec value="center:max(d;4px):noGrow"/>
             <rowspec value="top:4dlu:noGrow"/>
-            <rowspec value="center:max(d;4px):noGrow"/>
-            <rowspec value="top:4dlu:noGrow"/>
-            <rowspec value="center:max(d;4px):noGrow"/>
-            <rowspec value="top:4dlu:noGrow"/>
-            <rowspec value="center:max(d;4px):noGrow"/>
-            <rowspec value="top:4dlu:noGrow"/>
-            <rowspec value="center:max(d;4px):noGrow"/>
-            <rowspec value="top:33dlu:noGrow"/>
-            <rowspec value="top:23dlu:noGrow"/>
             <rowspec value="center:max(d;4px):noGrow"/>
             <colspec value="fill:183px:noGrow"/>
             <colspec value="left:4dlu:noGrow"/>
@@ -140,22 +187,13 @@
                   <text value="Nombre cliente registrado"/>
                 </properties>
               </component>
-              <component id="d5d09" class="javax.swing.JComboBox" binding="comboClientesRegistrados">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                  <forms/>
-                </constraints>
-                <properties>
-                  <model/>
-                </properties>
-              </component>
               <component id="b5182" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
-                  <text value="*Fecha inicio"/>
+                  <text value="Fecha inicio"/>
                 </properties>
               </component>
               <component id="1517b" class="javax.swing.JLabel">
@@ -164,33 +202,33 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <text value="*Fecha fin"/>
+                  <text value="Fecha fin"/>
                 </properties>
               </component>
-              <component id="8fea7" class="com.github.lgooddatepicker.components.DatePicker" binding="fechaInicio">
+              <component id="70c24" class="com.github.lgooddatepicker.components.DatePicker" binding="fechaInicio">
                 <constraints>
                   <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties/>
               </component>
-              <component id="90d94" class="com.github.lgooddatepicker.components.DatePicker" binding="fechaFin">
+              <component id="b76cd" class="com.github.lgooddatepicker.components.DatePicker" binding="fechaFin">
                 <constraints>
                   <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties/>
               </component>
-              <component id="15ca4" class="javax.swing.JLabel">
+              <component id="bc157" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
-                  <text value="Tipo de suscripcion"/>
+                  <text value="Estado"/>
                 </properties>
               </component>
-              <component id="1f1f0" class="javax.swing.JComboBox" binding="comboTipoSuscripcion">
+              <component id="970d8" class="javax.swing.JComboBox" binding="comboEstadoSuscripcion">
                 <constraints>
                   <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
@@ -199,125 +237,54 @@
                   <model/>
                 </properties>
               </component>
-              <component id="639d7" class="javax.swing.JLabel">
+              <component id="936d2" class="javax.swing.JComboBox" binding="comboClientesRegistrados">
                 <constraints>
-                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
-                </constraints>
-                <properties>
-                  <text value="Precio"/>
-                </properties>
-              </component>
-              <component id="bac71" class="javax.swing.JTextField" binding="txtPrecio">
-                <constraints>
-                  <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                  <forms defaultalign-horz="false"/>
                 </constraints>
                 <properties/>
               </component>
-              <component id="7e63e" class="javax.swing.JLabel">
+              <component id="52469" class="javax.swing.JButton" binding="añadirButton1" default-binding="true">
                 <constraints>
-                  <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
-                  <text value="Estado pago"/>
+                  <text value="Añadir"/>
                 </properties>
               </component>
-              <component id="a76e4" class="javax.swing.JComboBox" binding="comboPagado">
+              <component id="ad8c" class="javax.swing.JButton" default-binding="true">
                 <constraints>
-                  <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
-                  <model/>
+                  <text value="Modificar"/>
                 </properties>
               </component>
-              <component id="ba840" class="javax.swing.JButton" binding="btnAddSuscripciones">
+              <component id="31527" class="javax.swing.JButton" default-binding="true">
                 <constraints>
                   <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
-                  <actionCommand value="añadirSuscripcion"/>
-                  <text value="Añadir"/>
-                </properties>
-              </component>
-              <component id="11507" class="javax.swing.JButton" binding="btnModificarSuscripciones">
-                <constraints>
-                  <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <forms/>
-                </constraints>
-                <properties>
-                  <actionCommand value="modificarSuscripcion"/>
-                  <text value="Modificar"/>
-                </properties>
-              </component>
-              <component id="66a25" class="javax.swing.JButton" binding="btnDeleteSuscripciones">
-                <constraints>
-                  <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <forms/>
-                </constraints>
-                <properties>
-                  <actionCommand value="eliminarSuscripcion"/>
                   <text value="Eliminar"/>
                 </properties>
               </component>
-              <scrollpane id="dc763">
+              <scrollpane id="16618">
                 <constraints>
-                  <grid row="12" column="2" row-span="8" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="8" column="2" row-span="5" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                   <forms defaultalign-horz="false" defaultalign-vert="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="8a6d0" class="javax.swing.JTable" binding="suscripcionesTabla">
+                  <component id="f93b2" class="javax.swing.JList" binding="listSuscripciones">
                     <constraints/>
                     <properties/>
                   </component>
                 </children>
               </scrollpane>
-              <component id="9eb6c" class="javax.swing.JLabel" binding="lblAviso">
-                <constraints>
-                  <grid row="21" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                  <forms/>
-                </constraints>
-                <properties>
-                  <text value="*Nota: Todas las suscripciones están sujetas a una permanencia de un año"/>
-                </properties>
-              </component>
-              <component id="66ac7" class="javax.swing.JButton" binding="btnFechasContrato">
-                <constraints>
-                  <grid row="20" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <forms/>
-                </constraints>
-                <properties>
-                  <actionCommand value="fechasContrato"/>
-                  <text value="Detalles fechas contrato"/>
-                </properties>
-              </component>
-              <component id="df52c" class="javax.swing.JButton" binding="btnLimpiarSeleccionSuscripciones">
-                <constraints>
-                  <grid row="20" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <forms/>
-                </constraints>
-                <properties>
-                  <actionCommand value="limpiarSeleccionSuscripciones"/>
-                  <text value="Limpiar selección"/>
-                </properties>
-              </component>
-              <component id="85eb" class="javax.swing.JButton" binding="btnOrdenarPorSuscripcion">
-                <constraints>
-                  <grid row="18" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <forms/>
-                </constraints>
-                <properties>
-                  <actionCommand value="ordenarPorSuscripcion"/>
-                  <text value="Ordenar por suscripción"/>
-                </properties>
-              </component>
             </children>
           </grid>
           <grid id="8e3ef" binding="JPanelClases" layout-manager="FormLayout">
@@ -332,14 +299,6 @@
             <rowspec value="center:max(d;4px):noGrow"/>
             <rowspec value="top:4dlu:noGrow"/>
             <rowspec value="center:max(d;4px):noGrow"/>
-            <rowspec value="top:4dlu:noGrow"/>
-            <rowspec value="center:max(d;4px):noGrow"/>
-            <rowspec value="top:4dlu:noGrow"/>
-            <rowspec value="center:max(d;4px):noGrow"/>
-            <rowspec value="top:4dlu:noGrow"/>
-            <rowspec value="center:max(d;4px):noGrow"/>
-            <rowspec value="top:55dlu:noGrow"/>
-            <rowspec value="center:183px:noGrow"/>
             <colspec value="fill:149px:noGrow"/>
             <colspec value="left:4dlu:noGrow"/>
             <colspec value="fill:d:grow"/>
@@ -349,79 +308,27 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="dc042" class="javax.swing.JLabel">
+              <component id="74402" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
-                  <text value="Tipo de clase"/>
+                  <text value="Nombre"/>
                 </properties>
-              </component>
-              <component id="c8d1" class="javax.swing.JComboBox" binding="comboTiposClases">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                  <forms/>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="74402" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                  <forms/>
-                </constraints>
-                <properties>
-                  <text value="Aforo máximo"/>
-                </properties>
-              </component>
-              <component id="fa71" class="javax.swing.JTextField" binding="txtAforoMaximo">
-                <constraints>
-                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                  <forms defaultalign-horz="false"/>
-                </constraints>
-                <properties/>
               </component>
               <component id="5ff7f" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                  <forms/>
-                </constraints>
-                <properties>
-                  <text value="Duracion"/>
-                </properties>
-              </component>
-              <component id="a6712" class="javax.swing.JTextField" binding="txtDuracionClase">
-                <constraints>
-                  <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                  <forms defaultalign-horz="false"/>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="560c8" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
                   <text value="Instructor"/>
                 </properties>
               </component>
-              <component id="c625f" class="javax.swing.JTextField" binding="txtInstructorAsignado">
+              <component id="190a6" class="javax.swing.JButton" binding="btnNuevaClase">
                 <constraints>
-                  <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                  <forms defaultalign-horz="false"/>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="190a6" class="javax.swing.JButton" binding="btnAddClase">
-                <constraints>
-                  <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
@@ -429,9 +336,9 @@
                   <text value="Añadir"/>
                 </properties>
               </component>
-              <component id="175ae" class="javax.swing.JButton" binding="btnEliimnarClase">
+              <component id="175ae" class="javax.swing.JButton" binding="btnBorrarClase">
                 <constraints>
-                  <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
@@ -439,23 +346,9 @@
                   <text value="Eliminar"/>
                 </properties>
               </component>
-              <scrollpane id="bed2c">
-                <constraints>
-                  <grid row="10" column="2" row-span="8" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                  <forms defaultalign-horz="false" defaultalign-vert="false"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="9a24d" class="javax.swing.JTable" binding="clasesTabla">
-                    <constraints/>
-                    <properties/>
-                  </component>
-                </children>
-              </scrollpane>
               <component id="ba668" class="javax.swing.JButton" binding="btnModificarClase">
                 <constraints>
-                  <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
@@ -463,44 +356,60 @@
                   <text value="Modificar"/>
                 </properties>
               </component>
-              <component id="29d87" class="javax.swing.JLabel">
+              <component id="b0f15" class="javax.swing.JTextField" binding="txtNombreClase">
                 <constraints>
-                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                  <forms/>
-                </constraints>
-                <properties>
-                  <text value="Material utilizado"/>
-                </properties>
-              </component>
-              <component id="bb8c8" class="javax.swing.JTextField" binding="txtMaterialUtilizado">
-                <constraints>
-                  <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
                   <forms defaultalign-horz="false"/>
                 </constraints>
                 <properties/>
               </component>
-              <component id="e1e09" class="javax.swing.JButton" binding="btnLimpiarSeleccionClases">
+              <component id="61bea" class="javax.swing.JTextField" binding="txtInstructor">
                 <constraints>
-                  <grid row="18" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
-                  <forms defaultalign-vert="false"/>
+                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                  <forms defaultalign-horz="false"/>
                 </constraints>
                 <properties>
-                  <actionCommand value="limpiarSeleccionClases"/>
-                  <text value="Limpiar selección"/>
+                  <text value=""/>
                 </properties>
               </component>
-              <component id="ed764" class="javax.swing.JButton" binding="btnOrdenarPorTipoClase">
+              <component id="c5bbf" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <forms/>
                 </constraints>
                 <properties>
-                  <actionCommand value="ordenarPorTipo"/>
-                  <text value="Ordenar por tipo"/>
+                  <text value="Horario"/>
                 </properties>
               </component>
+              <component id="1c881" class="javax.swing.JTextField" binding="txtHorario">
+                <constraints>
+                  <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                  <forms defaultalign-horz="false"/>
+                </constraints>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
+              <scrollpane id="d33ba">
+                <constraints>
+                  <grid row="6" column="2" row-span="5" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <forms defaultalign-horz="false" defaultalign-vert="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="358eb" class="javax.swing.JList" binding="listClases">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
         </children>

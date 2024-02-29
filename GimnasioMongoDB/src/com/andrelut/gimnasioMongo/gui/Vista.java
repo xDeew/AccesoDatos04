@@ -12,9 +12,32 @@ public class Vista {
     public JPanel JPanelClases;
     public JPanel JPanelSuscripciones;
     public JPanel panel1;
-    private JTextField txtNombre;
-    private DatePicker fechaNacimiento;
+    public JButton btnNuevoCliente;
+    public JButton btnModificarCliente;
+    public JButton btnBorrarCliente;
+    public JButton btnNuevaSuscripcion;
+    public JButton btnModificarSuscripcion;
+    public JButton btnBorrarSuscripcion;
+    public JButton btnNuevaClase;
+    public JButton btnModificarClase;
+    public JButton btnBorrarClase;
+    public JTextField txtNombre;
+    public DatePicker fechaNacimiento;
+    public JTextField txtAltura;
+    public JTextField txtPeso;
+    public DatePicker fechaInicio;
+    public DatePicker fechaFin;
+    public JComboBox comboEstadoSuscripcion;
+    public JTextField txtNombreClase;
+    public JTextField txtInstructor;
     public JFrame frame;
+    public JTextField txtHorario;
+    public JList listClases;
+    public JComboBox comboClientesRegistrados;
+    public JButton añadirButton;
+    public JList listClientes;
+    public JButton añadirButton1;
+    public JList listSuscripciones;
 
 
     public Vista() {
