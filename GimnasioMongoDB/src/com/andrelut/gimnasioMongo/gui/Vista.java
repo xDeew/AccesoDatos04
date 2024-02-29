@@ -1,6 +1,7 @@
 package com.andrelut.gimnasioMongo.gui;
 
 import com.andrelut.gimnasioMongo.base.Cliente;
+import com.andrelut.gimnasioMongo.base.Suscripcion;
 import com.github.lgooddatepicker.components.DatePicker;
 
 import javax.swing.*;
@@ -41,6 +42,7 @@ public class Vista {
     public JTextField txtBuscarSuscripcion;
     public JTextField txtBuscarClase;
     public DefaultListModel<Cliente> dlmClientes;
+    public DefaultListModel<Suscripcion> dlmSuscripciones;
     JMenuItem itemConexion;
     JMenuItem itemSalir;
 
@@ -50,7 +52,7 @@ public class Vista {
         frame.setContentPane(panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setSize(new Dimension(1000, 600));
+        frame.setSize(new Dimension(1100, 600));
         frame.setLocationRelativeTo(null);
 
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
@@ -76,13 +78,24 @@ public class Vista {
         JPanelClientes.setBackground(skyBlue);
         JPanelClases.setBackground(skyBlue);
         JPanelSuscripciones.setBackground(skyBlue);
-//        setComboBox();
+        setComboBox();
 
+    }
+
+    private void setComboBox() {
+        comboEstadoSuscripcion.addItem("Activa");
+        comboEstadoSuscripcion.addItem("No activa");
+
+        comboClientesRegistrados.setSelectedIndex(-1);
+        comboEstadoSuscripcion.setSelectedIndex(-1);
     }
 
     private void setListModels() {
         dlmClientes = new DefaultListModel<>();
         listClientes.setModel(dlmClientes);
+
+        dlmSuscripciones = new DefaultListModel<>();
+        listSuscripciones.setModel(dlmSuscripciones);
     }
 
     private void setMenu() {

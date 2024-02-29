@@ -7,6 +7,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -38,8 +39,10 @@ public class Modelo {
     }
 
     public void desconectar() {
-        cliente.close();
-        cliente = null;
+        if (cliente != null) {
+            cliente.close();
+            cliente = null;
+        }
     }
 
 
@@ -51,6 +54,10 @@ public class Modelo {
     public void guardarObjeto(Object objeto) {
         if (objeto instanceof Cliente) {
             coleccionClientes.insertOne(objectToDocument(objeto));
+        } else if (objeto instanceof Clase) {
+            coleccionClases.insertOne(objectToDocument(objeto));
+        } else if (objeto instanceof Suscripcion) {
+            coleccionSuscripciones.insertOne(objectToDocument(objeto));
         }
     }
 
@@ -70,9 +77,13 @@ public class Modelo {
             document.append("horario", clase.getHorario());
         } else if (objeto instanceof Suscripcion) {
             Suscripcion suscripcion = (Suscripcion) objeto;
-            document.append("fechaSuscripcion", suscripcion.getFechaSuscripcion());
-            document.append("fechaFinalizacion", suscripcion.getFechaFinalizacion());
+            document.append("fechaSuscripcion", Date.from(suscripcion.getFechaSuscripcion().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            document.append("fechaFinalizacion", Date.from(suscripcion.getFechaFinalizacion().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             document.append("estado", suscripcion.getEstado());
+
+            if (suscripcion.getCliente() != null) {
+                document.append("clienteId", suscripcion.getCliente().getId());
+            }
 
         } else {
             return null;
@@ -90,6 +101,10 @@ public class Modelo {
     }
 
     private Cliente documentToCliente(Document document) {
+        if (document == null) {
+            return null;
+        }
+
         Cliente cliente = new Cliente();
 
         cliente.setId(document.getObjectId("_id"));
@@ -102,5 +117,61 @@ public class Modelo {
         cliente.setAltura(document.getDouble("altura"));
 
         return cliente;
+    }
+
+    public void modificarObjeto(Object objeto) {
+        if (objeto instanceof Cliente) {
+            Cliente cliente = (Cliente) objeto;
+            coleccionClientes.replaceOne(new Document("_id", cliente.getId()), objectToDocument(cliente));
+        } else if (objeto instanceof Clase) {
+            Clase clase = (Clase) objeto;
+            coleccionClases.replaceOne(new Document("_id", clase.getId()), objectToDocument(clase));
+        } else if (objeto instanceof Suscripcion) {
+            Suscripcion suscripcion = (Suscripcion) objeto;
+            coleccionSuscripciones.replaceOne(new Document("_id", suscripcion.getId()), objectToDocument(suscripcion));
+        }
+    }
+
+    public void eliminarObjeto(Object selectedValue) {
+        if (selectedValue instanceof Cliente) {
+            Cliente cliente = (Cliente) selectedValue;
+            coleccionClientes.deleteOne(new Document("_id", cliente.getId()));
+        } else if (selectedValue instanceof Clase) {
+            Clase clase = (Clase) selectedValue;
+            coleccionClases.deleteOne(new Document("_id", clase.getId()));
+        } else if (selectedValue instanceof Suscripcion) {
+            Suscripcion suscripcion = (Suscripcion) selectedValue;
+            coleccionSuscripciones.deleteOne(new Document("_id", suscripcion.getId()));
+        }
+    }
+
+    public ArrayList<Suscripcion> getSuscripciones() {
+        ArrayList<Suscripcion> lista = new ArrayList<>();
+
+        for (Document document : coleccionSuscripciones.find()) {
+            lista.add(documentToSuscripcion(document));
+        }
+        return lista;
+
+    }
+
+    private Suscripcion documentToSuscripcion(Document document) {
+        Suscripcion suscripcion = new Suscripcion();
+
+        suscripcion.setId(document.getObjectId("_id"));
+        suscripcion.setFechaSuscripcion(document.getDate("fechaSuscripcion").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        suscripcion.setFechaFinalizacion(document.getDate("fechaFinalizacion").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        suscripcion.setEstado(document.getString("estado"));
+
+        ObjectId clienteId = document.getObjectId("clienteId");
+        Cliente cliente = getClienteById(clienteId);
+        suscripcion.setCliente(cliente);
+
+        return suscripcion;
+    }
+
+    private Cliente getClienteById(ObjectId id) {
+        Document document = coleccionClientes.find(new Document("_id", id)).first();
+        return documentToCliente(document);
     }
 }

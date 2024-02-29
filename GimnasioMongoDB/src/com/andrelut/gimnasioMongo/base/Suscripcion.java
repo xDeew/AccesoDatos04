@@ -9,11 +9,14 @@ public class Suscripcion {
     LocalDate fechaFinalizacion;
     private ObjectId id;
     private String estado;
+    private Cliente cliente;
 
-    public Suscripcion(LocalDate fechaSuscripcion, LocalDate fechaFinalizacion, String estado) {
+
+    public Suscripcion(Cliente cliente, LocalDate fechaSuscripcion, LocalDate fechaFinalizacion, String estado) {
         this.fechaSuscripcion = fechaSuscripcion;
         this.fechaFinalizacion = fechaFinalizacion;
         this.estado = estado;
+        this.cliente = cliente;
     }
 
     public Suscripcion() {
@@ -52,10 +55,22 @@ public class Suscripcion {
         this.estado = estado;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     @Override
     public String toString() {
-        return "Fecha de Suscripción: " + fechaSuscripcion + " \n " +
-                "Fecha de Finalización: " + fechaFinalizacion + " \n " +
-                "Estado: " + estado + " \n ";
+        String clienteInfo;
+        if (cliente != null) clienteInfo = "Cliente: " + cliente.getNombre() + " - " + cliente.getId() + "  ";
+        else clienteInfo = "Cliente: null";
+        return clienteInfo + "  \n  " +
+                "  Fecha de Suscripción: " + fechaSuscripcion + "  \n  " +
+                "  Fecha de Finalización: " + fechaFinalizacion + "  \n  " +
+                "  Estado: " + estado + "  \n  ";
     }
 }

@@ -18,25 +18,25 @@ db.clases.insert([
     {
         nombre: "Yoga",
         instructor: "Ana Gómez",
-        horario: "2024-02-15T09:00:00Z"
+        horario: "2024-02-15"
     },
     {
         nombre: "Crossfit",
         instructor: "Marcos Duarte",
-        horario: "2024-02-16T17:00:00Z"
+        horario: "2024-02-16"
     }
 ]);
 
 db.suscripciones.insert([
     {
-        fechaSuscripcion: "2024-01-01",
+        fechaSuscripcion: new ISODate("2024-01-01T00:00:00Z"),
         estado: "Activa",
-        fechaFinalizacion: "2024-12-31"
+        fechaFinalizacion: new ISODate("2024-12-31T00:00:00Z")
     },
     {
 
-        fechaSuscripcion: "2024-01-15",
+        fechaSuscripcion: new ISODate("2024-01-15T00:00:00Z"),
         estado: "Activa", 
-        fechaFinalizacion: "2024-12-31" 
+        fechaFinalizacion: new ISODate("2024-12-31T00:00:00Z")
     }
 ]);

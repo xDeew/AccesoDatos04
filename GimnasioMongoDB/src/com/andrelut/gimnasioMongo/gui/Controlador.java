@@ -5,9 +5,6 @@ import com.andrelut.gimnasioMongo.base.Clase;
 import com.andrelut.gimnasioMongo.base.Cliente;
 import com.andrelut.gimnasioMongo.base.Suscripcion;
 import com.andrelut.gimnasioMongo.util.Util;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import org.bson.Document;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -16,9 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Controlador implements ActionListener, KeyListener, ListSelectionListener {
     private Modelo modelo;
@@ -42,7 +37,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     private void addActionListeners(ActionListener listener) {
         vista.btnNuevoCliente.addActionListener(listener);
         vista.btnModificarCliente.addActionListener(listener);
-        vista.btnModificarCliente.addActionListener(listener);
+        vista.btnBorrarCliente.addActionListener(listener);
         vista.btnNuevaClase.addActionListener(listener);
         vista.btnModificarClase.addActionListener(listener);
         vista.btnBorrarClase.addActionListener(listener);
@@ -116,22 +111,81 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 break;
 
             case "modificarCliente":
+                if (vista.listClientes.getSelectedValue() != null) {
+                    if (comprobarCamposCliente()) {
+                        Cliente cliente = (Cliente) vista.listClientes.getSelectedValue();
+                        cliente.setNombre(vista.txtNombre.getText());
+                        cliente.setNacimiento(vista.fechaNacimiento.getDate());
+                        cliente.setPeso(Double.parseDouble(vista.txtPeso.getText()));
+                        cliente.setAltura(Double.parseDouble(vista.txtAltura.getText()));
+                        modelo.modificarObjeto(cliente);
+                        JOptionPane.showMessageDialog(vista.frame, "Cliente modificado correctamente.");
+                        limpiarCamposCliente();
+                    } else {
+                        Util.mensajeError("Error al modificar, revise los campos e introduzca nuevamente.");
+                    }
+                    listarClientes();
+                } else {
+                    Util.mensajeError("Por favor, seleccione un cliente de la lista.");
+                }
 
                 break;
 
             case "eliminarCliente":
+                if (vista.listClientes.getSelectedValue() != null) {
+                    modelo.eliminarObjeto(vista.listClientes.getSelectedValue());
+                    JOptionPane.showMessageDialog(vista.frame, "Cliente eliminado correctamente.");
+                    limpiarCamposCliente();
+                    listarClientes();
+                } else {
+                    Util.mensajeError("Por favor, seleccione un cliente de la lista.");
+                }
 
                 break;
 
             case "addSuscripcion":
-
+                if (comprobarCamposSuscripcion()) {
+                    Cliente clienteSeleccionado = (Cliente) vista.comboClientesRegistrados.getSelectedItem();
+                    Suscripcion nuevaSuscripcion = new Suscripcion(clienteSeleccionado, vista.fechaInicio.getDate(), vista.fechaFin.getDate(), vista.comboEstadoSuscripcion.getSelectedItem().toString());
+                    modelo.guardarObjeto(nuevaSuscripcion);
+                    JOptionPane.showMessageDialog(vista.frame, "Suscripción guardada correctamente.");
+                    limpiarCamposSuscripcion();
+                } else {
+                    Util.mensajeError("Por favor, rellene todos los campos.");
+                }
+                listarSuscripciones();
                 break;
 
             case "modificarSuscripcion":
+                if (vista.listSuscripciones.getSelectedValue() != null) {
+                    if (comprobarCamposSuscripcion()) {
+                        Suscripcion suscripcion = (Suscripcion) vista.listSuscripciones.getSelectedValue();
+                        suscripcion.setCliente((Cliente) vista.comboClientesRegistrados.getSelectedItem());
+                        suscripcion.setFechaSuscripcion(vista.fechaInicio.getDate());
+                        suscripcion.setFechaFinalizacion(vista.fechaFin.getDate());
+                        suscripcion.setEstado(vista.comboEstadoSuscripcion.getSelectedItem().toString());
+                        modelo.modificarObjeto(suscripcion);
+                        JOptionPane.showMessageDialog(vista.frame, "Suscripción modificada correctamente.");
+                        limpiarCamposSuscripcion();
+                    } else {
+                        Util.mensajeError("Error al modificar, revise los campos e introduzca nuevamente.");
+                    }
+                    listarSuscripciones();
+                } else {
+                    Util.mensajeError("Por favor, seleccione una suscripción de la lista.");
+                }
 
                 break;
 
             case "eliminarSuscripcion":
+                if (vista.listSuscripciones.getSelectedValue() != null) {
+                    modelo.eliminarObjeto(vista.listSuscripciones.getSelectedValue());
+                    JOptionPane.showMessageDialog(vista.frame, "Suscripción eliminada correctamente.");
+                    limpiarCamposSuscripcion();
+                    listarSuscripciones();
+                } else {
+                    Util.mensajeError("Por favor, seleccione una suscripción de la lista.");
+                }
 
                 break;
 
@@ -153,21 +207,10 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     private void actualizarComboClientesRegistrados() {
         vista.comboClientesRegistrados.removeAllItems();
 
-        MongoCollection<Document> coleccionClientes = modelo.coleccionClientes;
-        FindIterable<Document> documentos = coleccionClientes.find();
+        ArrayList<Cliente> clientes = modelo.getClientes();
 
-        for (Document documento : documentos) {
-            Cliente cliente = new Cliente();
-            cliente.setId(documento.getObjectId("_id"));
-            cliente.setNombre(documento.getString("nombre"));
-            Date nacimientoDate = documento.getDate("fechaNacimiento");
-            if (nacimientoDate != null) {
-                cliente.setNacimiento(nacimientoDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            }
-            cliente.setPeso(documento.getDouble("peso"));
-            cliente.setAltura(documento.getDouble("altura"));
-
-            vista.comboClientesRegistrados.addItem(cliente.getNombre() + " - " + cliente.getId());
+        for (Cliente cliente : clientes) {
+            vista.comboClientesRegistrados.addItem(cliente);
         }
     }
 
@@ -179,6 +222,31 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting()) {
+            Cliente cliente = (Cliente) vista.listClientes.getSelectedValue();
+            if (cliente != null) {
+                vista.txtNombre.setText(cliente.getNombre());
+                vista.fechaNacimiento.setDate(cliente.getNacimiento());
+                vista.txtPeso.setText(String.valueOf(cliente.getPeso()));
+                vista.txtAltura.setText(String.valueOf(cliente.getAltura()));
+
+            }
+            Suscripcion suscripcion = (Suscripcion) vista.listSuscripciones.getSelectedValue();
+            if (suscripcion != null && suscripcion.getCliente() != null) {
+                Cliente clienteSeleccionado = suscripcion.getCliente();
+                for (int i = 0; i < vista.comboClientesRegistrados.getItemCount(); i++) {
+                    cliente = (Cliente) vista.comboClientesRegistrados.getItemAt(i);
+                    if (cliente != null && cliente.getId().equals(clienteSeleccionado.getId())) {
+                        vista.comboClientesRegistrados.setSelectedIndex(i);
+                        break;
+                    }
+                }
+                vista.fechaInicio.setDate(suscripcion.getFechaSuscripcion());
+                vista.fechaFin.setDate(suscripcion.getFechaFinalizacion());
+                vista.comboEstadoSuscripcion.setSelectedItem(suscripcion.getEstado());
+            }
+
+        }
 
     }
 
@@ -208,6 +276,10 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private void limpiarCamposSuscripcion() {
+        vista.fechaInicio.setDate(null);
+        vista.fechaFin.setDate(null);
+        vista.comboEstadoSuscripcion.setSelectedIndex(-1);
+        vista.comboClientesRegistrados.setSelectedIndex(-1);
 
     }
 
@@ -225,6 +297,10 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private void listarSuscripciones() {
+        vista.dlmSuscripciones.clear();
+        for (Suscripcion suscripcion : modelo.getSuscripciones()) {
+            vista.dlmSuscripciones.addElement(suscripcion);
+        }
 
     }
 
