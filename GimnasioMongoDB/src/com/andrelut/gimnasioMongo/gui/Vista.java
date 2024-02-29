@@ -49,6 +49,7 @@ public class Vista {
     public DefaultListModel<Suscripcion> dlmSuscripciones;
     JMenuItem itemConexion;
     JMenuItem itemSalir;
+    private JLabel labelLogo;
 
 
     public Vista() {
@@ -56,7 +57,7 @@ public class Vista {
         frame.setContentPane(panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setSize(new Dimension(1100, 600));
+        frame.setSize(new Dimension(1100, 700));
         frame.setLocationRelativeTo(null);
 
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
@@ -82,8 +83,21 @@ public class Vista {
         JPanelClientes.setBackground(skyBlue);
         JPanelClases.setBackground(skyBlue);
         JPanelSuscripciones.setBackground(skyBlue);
+        panel1.setBackground(skyBlue);
         setComboBox();
+        setLogo();
 
+
+    }
+
+    private void setLogo() {
+        ImageIcon originalIcon = new ImageIcon("resources/logoFitnessPark.png");
+        Image image = originalIcon.getImage();
+        Image newimg = image.getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
+        ImageIcon logoIcon = new ImageIcon(newimg);
+        labelLogo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        labelLogo.setIcon(logoIcon);
+        panel1.add(labelLogo, BorderLayout.SOUTH);
     }
 
     private void setComboBox() {
