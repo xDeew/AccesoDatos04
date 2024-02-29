@@ -57,6 +57,25 @@ public class Vista {
 
         setMenu();
         setListModels();
+
+        Color lightBlue = new Color(173, 216, 230);
+        Color skyBlue = new Color(135, 206, 235);
+
+        btnNuevoCliente.setBackground(lightBlue);
+        btnModificarCliente.setBackground(lightBlue);
+        btnBorrarCliente.setBackground(lightBlue);
+
+        btnNuevaSuscripcion.setBackground(lightBlue);
+        btnModificarSuscripcion.setBackground(lightBlue);
+        btnBorrarSuscripcion.setBackground(lightBlue);
+
+        btnNuevaClase.setBackground(lightBlue);
+        btnModificarClase.setBackground(lightBlue);
+        btnBorrarClase.setBackground(lightBlue);
+
+        JPanelClientes.setBackground(skyBlue);
+        JPanelClases.setBackground(skyBlue);
+        JPanelSuscripciones.setBackground(skyBlue);
 //        setComboBox();
 
     }

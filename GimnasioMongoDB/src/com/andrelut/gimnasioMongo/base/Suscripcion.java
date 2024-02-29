@@ -5,11 +5,9 @@ import org.bson.types.ObjectId;
 import java.time.LocalDate;
 
 public class Suscripcion {
-    private ObjectId id;
-
     LocalDate fechaSuscripcion;
     LocalDate fechaFinalizacion;
-
+    private ObjectId id;
     private String estado;
 
     public Suscripcion(LocalDate fechaSuscripcion, LocalDate fechaFinalizacion, String estado) {
@@ -29,6 +27,7 @@ public class Suscripcion {
     public void setId(ObjectId id) {
         this.id = id;
     }
+
     public LocalDate getFechaSuscripcion() {
         return fechaSuscripcion;
     }
@@ -55,10 +54,8 @@ public class Suscripcion {
 
     @Override
     public String toString() {
-        return "Suscripcion{" +
-                "fechaInicio=" + fechaSuscripcion +
-                ", fechaFin=" + fechaFinalizacion +
-                ", estado='" + estado + '\'' +
-                '}';
+        return "Fecha de Suscripción: " + fechaSuscripcion + " \n " +
+                "Fecha de Finalización: " + fechaFinalizacion + " \n " +
+                "Estado: " + estado + " \n ";
     }
 }

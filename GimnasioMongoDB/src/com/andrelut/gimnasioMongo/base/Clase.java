@@ -53,7 +53,9 @@ public class Clase {
 
     @Override
     public String toString() {
-        return nombre + " - " + instructor + " - " + horario;
+        return "Nombre de la Clase: " + nombre + " \n " +
+                "Instructor: " + instructor + " \n " +
+                "Horario: " + horario + " \n ";
     }
 
 

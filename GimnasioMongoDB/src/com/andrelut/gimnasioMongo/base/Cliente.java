@@ -64,6 +64,10 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return nombre + " " + nacimiento + " " + peso + " " + altura;
+        return "Nombre: " + nombre + "   \n   " +
+                "Nacimiento: " + nacimiento + "   \n   " +
+                "Peso: " + peso + "kg\n   " +
+                "Altura: " + altura + "m\n   ";
     }
+
 }

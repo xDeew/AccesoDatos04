@@ -60,7 +60,7 @@ public class Modelo {
         if (objeto instanceof Cliente) {
             Cliente cliente = (Cliente) objeto;
             document.append("nombre", cliente.getNombre());
-            document.append("nacimiento", java.util.Date.from(cliente.getNacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            document.append("fechaNacimiento", Date.from(cliente.getNacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             document.append("peso", cliente.getPeso());
             document.append("altura", cliente.getAltura());
         } else if (objeto instanceof Clase) {
@@ -94,7 +94,7 @@ public class Modelo {
 
         cliente.setId(document.getObjectId("_id"));
         cliente.setNombre(document.getString("nombre"));
-        Date nacimientoDate = document.getDate("nacimiento");
+        Date nacimientoDate = document.getDate("fechaNacimiento");
         if (nacimientoDate != null) {
             cliente.setNacimiento(nacimientoDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         }

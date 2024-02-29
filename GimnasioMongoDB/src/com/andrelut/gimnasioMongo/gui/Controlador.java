@@ -87,15 +87,15 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
                 break;
             case "conectar":
-
                 modelo.conectar();
                 JOptionPane.showMessageDialog(vista.frame, "Conectado a la base de datos.");
                 vista.itemConexion.setText("Desconectar");
                 vista.itemConexion.setActionCommand("desconectar");
                 vista.comboClientesRegistrados.setEnabled(true);
                 actualizarComboClientesRegistrados();
-
-
+                listarClientes();
+                listarClases();
+                listarSuscripciones();
                 break;
 
             case "salir":
@@ -111,7 +111,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 } else {
                     Util.mensajeError("Por favor, rellene todos los campos.");
                 }
-                listarClases();
+                listarClientes();
 
                 break;
 
@@ -160,7 +160,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
             Cliente cliente = new Cliente();
             cliente.setId(documento.getObjectId("_id"));
             cliente.setNombre(documento.getString("nombre"));
-            Date nacimientoDate = documento.getDate("nacimiento");
+            Date nacimientoDate = documento.getDate("fechaNacimiento");
             if (nacimientoDate != null) {
                 cliente.setNacimiento(nacimientoDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             }
@@ -217,6 +217,10 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
 
     private void listarClientes() {
+        vista.dlmClientes.clear();
+        for (Cliente cliente : modelo.getClientes()) {
+            vista.dlmClientes.addElement(cliente);
+        }
 
     }
 
@@ -225,10 +229,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
     }
 
     private void listarClases() {
-        vista.dlmClientes.clear();
-        for (Cliente cliente : modelo.getClientes()) {
-            vista.dlmClientes.addElement(cliente);
-        }
+
 
     }
 
