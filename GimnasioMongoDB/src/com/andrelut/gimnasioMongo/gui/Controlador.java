@@ -215,6 +215,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 } else {
                     Util.mensajeError("Por favor, rellene todos los campos.");
                 }
+                listarClases();
                 break;
 
             case "modificarClase":
@@ -395,8 +396,6 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         for (Clase clase : modelo.getClases()) {
             vista.dlmClases.addElement(clase);
         }
-
-
     }
 
     private void listarClientesBusqueda(ArrayList<Cliente> lista) {
