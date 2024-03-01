@@ -5,6 +5,7 @@ import com.andrelut.gimnasioMongo.base.Clase;
 import com.andrelut.gimnasioMongo.base.Cliente;
 import com.andrelut.gimnasioMongo.base.Suscripcion;
 import com.andrelut.gimnasioMongo.util.Util;
+import org.bson.types.ObjectId;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -142,14 +143,23 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
             case "eliminarCliente":
                 if (vista.listClientes.getSelectedValue() != null) {
-                    modelo.eliminarObjeto(vista.listClientes.getSelectedValue());
-                    JOptionPane.showMessageDialog(vista.frame, "Cliente eliminado correctamente.");
+                    Cliente cliente = (Cliente) vista.listClientes.getSelectedValue();
+                    ObjectId clientId = cliente.getId();
+                    ArrayList<Suscripcion> suscripciones = modelo.getSuscripciones();
+                    for (Suscripcion suscripcion : suscripciones) {
+                        if (suscripcion.getCliente().getId().equals(clientId) && suscripcion.getEstado().equals("Activa") || suscripcion.getEstado().equals("No activa")) {
+                            modelo.eliminarObjeto(suscripcion);
+                        }
+                    }
+                    modelo.eliminarObjeto(cliente);
+                    JOptionPane.showMessageDialog(vista.frame, "Cliente y sus suscripciones activas eliminadas correctamente.");
                     limpiarCamposCliente();
                     listarClientes();
+                    listarSuscripciones();
+                    limpiarCamposSuscripcion();
                 } else {
                     Util.mensajeError("Por favor, seleccione un cliente de la lista.");
                 }
-
                 break;
 
             case "addSuscripcion":
