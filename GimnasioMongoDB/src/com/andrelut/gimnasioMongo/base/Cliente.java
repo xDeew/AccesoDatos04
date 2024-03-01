@@ -11,11 +11,14 @@ public class Cliente {
     private double peso;
     private double altura;
 
-    public Cliente(String nombre, LocalDate nacimiento, double peso, double altura) {
+    private String email;
+
+    public Cliente(String nombre, LocalDate nacimiento, double peso, double altura, String email) {
         this.nombre = nombre;
         this.nacimiento = nacimiento;
         this.peso = peso;
         this.altura = altura;
+        this.email = email;
     }
 
     public Cliente() {
@@ -62,12 +65,21 @@ public class Cliente {
         this.altura = altura;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "Nombre: " + nombre + "   \n   " +
                 "Nacimiento: " + nacimiento + "   \n   " +
                 "Peso: " + peso + "kg\n   " +
-                "Altura: " + altura + "m\n   ";
+                "Altura: " + altura + "m\n   " +
+                "Email: " + email + "   \n   ";
     }
 
 }

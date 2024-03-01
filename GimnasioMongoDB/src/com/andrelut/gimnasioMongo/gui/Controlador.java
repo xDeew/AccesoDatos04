@@ -109,8 +109,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
             case "addCliente":
                 if (comprobarCamposCliente()) {
-                    modelo.guardarObjeto(new Cliente(vista.txtNombre.getText(), vista.fechaNacimiento.getDate(), Double.parseDouble(vista.txtPeso.getText()), Double.parseDouble(vista.txtAltura.getText())));
-                    JOptionPane.showMessageDialog(vista.frame, "Cliente guardado correctamente.");
+                    modelo.guardarObjeto(new Cliente(vista.txtNombre.getText(), vista.fechaNacimiento.getDate(), Double.parseDouble(vista.txtPeso.getText()), Double.parseDouble(vista.txtAltura.getText()), vista.txtEmail.getText()));
                     actualizarComboClientesRegistrados();
                     limpiarCamposCliente();
                 } else {
@@ -292,6 +291,7 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 vista.fechaNacimiento.setDate(cliente.getNacimiento());
                 vista.txtPeso.setText(String.valueOf(cliente.getPeso()));
                 vista.txtAltura.setText(String.valueOf(cliente.getAltura()));
+                vista.txtEmail.setText(cliente.getEmail());
 
             }
             Suscripcion suscripcion = (Suscripcion) vista.listSuscripciones.getSelectedValue();
@@ -342,7 +342,9 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
         vista.txtNombre.setText("");
         vista.txtPeso.setText("");
         vista.txtAltura.setText("");
+        vista.txtEmail.setText("");
         vista.fechaNacimiento.setDate(null);
+
 
     }
 

@@ -54,6 +54,7 @@ public class Vista {
     JMenuItem itemConexion;
     JMenuItem itemSalir;
     private JLabel labelLogo;
+    public JTextField txtEmail;
 
 
     public Vista() {

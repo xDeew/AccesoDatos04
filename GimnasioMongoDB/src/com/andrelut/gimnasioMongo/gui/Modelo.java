@@ -59,7 +59,15 @@ public class Modelo {
 
     public void guardarObjeto(Object objeto) {
         if (objeto instanceof Cliente) {
-            coleccionClientes.insertOne(objectToDocument(objeto));
+            Cliente cliente = (Cliente) objeto;
+            Document query = new Document("email", cliente.getEmail());
+            Document existingClient = coleccionClientes.find(query).first();
+            if (existingClient != null) {
+                JOptionPane.showMessageDialog(null, "El email ya está en uso por otro cliente");
+            } else {
+                coleccionClientes.insertOne(objectToDocument(objeto));
+                JOptionPane.showMessageDialog(null, "Cliente guardado correctamente.");
+            }
         } else if (objeto instanceof Clase) {
             coleccionClases.insertOne(objectToDocument(objeto));
         } else if (objeto instanceof Suscripcion) {
@@ -84,6 +92,7 @@ public class Modelo {
             document.append("fechaNacimiento", Date.from(cliente.getNacimiento().atStartOfDay(ZoneId.systemDefault()).toInstant()));
             document.append("peso", cliente.getPeso());
             document.append("altura", cliente.getAltura());
+            document.append("email", cliente.getEmail());
         } else if (objeto instanceof Clase) {
             Clase clase = (Clase) objeto;
             document.append("nombre", clase.getNombre());
@@ -129,6 +138,8 @@ public class Modelo {
         }
         cliente.setPeso(document.getDouble("peso"));
         cliente.setAltura(document.getDouble("altura"));
+        cliente.setEmail(document.getString("email"));
+
 
         return cliente;
     }
