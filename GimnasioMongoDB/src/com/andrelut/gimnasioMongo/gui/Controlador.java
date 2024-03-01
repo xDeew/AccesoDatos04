@@ -68,6 +68,13 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
             conectado = modelo.estaConectado();
             if (!conectado) {
                 JOptionPane.showMessageDialog(vista.frame, "No hay conexión a la base de datos. Por favor, conecte antes de continuar.", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+                vista.txtBuscarCliente.setText("");
+                vista.txtBuscarSuscripcion.setText("");
+                vista.txtBuscarClase.setText("");
+
+                limpiarCamposClase();
+                limpiarCamposCliente();
+                limpiarCamposSuscripcion();
                 return;
             }
         }
@@ -79,6 +86,8 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 vista.itemConexion.setText("Conectar");
                 vista.itemConexion.setActionCommand("conectar");
                 vista.comboClientesRegistrados.setEnabled(false);
+                vista.clearAllLists();
+
 
                 break;
             case "conectar":
@@ -244,6 +253,15 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if (!modelo.estaConectado()) {
+            JOptionPane.showMessageDialog(vista.frame, "Requiere conexión a la BD para buscar datos.", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            vista.txtBuscarCliente.setText("");
+            vista.txtBuscarSuscripcion.setText("");
+            vista.txtBuscarClase.setText("");
+
+            return;
+        }
+
         if (e.getSource() == vista.txtBuscarCliente) {
             if (vista.txtBuscarCliente.getText().isEmpty()) {
                 vista.dlmBusquedaClientes.clear();
@@ -289,6 +307,13 @@ public class Controlador implements ActionListener, KeyListener, ListSelectionLi
                 vista.fechaInicio.setDate(suscripcion.getFechaSuscripcion());
                 vista.fechaFin.setDate(suscripcion.getFechaFinalizacion());
                 vista.comboEstadoSuscripcion.setSelectedItem(suscripcion.getEstado());
+            }
+
+            Clase clase = (Clase) vista.listClases.getSelectedValue();
+            if (clase != null) {
+                vista.txtNombreClase.setText(clase.getNombre());
+                vista.txtInstructor.setText(clase.getInstructor());
+                vista.txtHorario.setText(clase.getHorario());
             }
 
         }

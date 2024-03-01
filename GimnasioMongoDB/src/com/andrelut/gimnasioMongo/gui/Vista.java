@@ -94,6 +94,15 @@ public class Vista {
 
     }
 
+    public void clearAllLists() {
+        dlmClientes.clear();
+        dlmSuscripciones.clear();
+        dlmClases.clear();
+        dlmBusquedaClientes.clear();
+        dlmBusquedaSuscripcionesClientes.clear();
+        dlmBusquedaClase.clear();
+    }
+
     private void setLogo() {
         ImageIcon originalIcon = new ImageIcon("resources/logoFitnessPark.png");
         Image image = originalIcon.getImage();
